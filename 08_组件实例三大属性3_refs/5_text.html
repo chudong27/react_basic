@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1_字符串形式的ref</title>
+</head>
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+	
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		class Demo extends React.Component {
+      event1 = () => {
+        alert(this.input1.value)
+      }
+      event2 = () => {
+        alert(this.input2.value)
+      }
+      state = {
+        isHot: true
+      }
+      change = () => {
+        
+        this.setState({isHot: !this.state.isHot})
+      }
+      render() {
+        return (
+          <div>
+            <p>今天天气{this.state.isHot ? '炎热' : '凉爽'}</p>
+            {/*<input ref={currentNode => {this.input1 = currentNode; console.log(currentNode);}} type="text" placeholder='点击弹框'/>&nbsp;*/}
+            <button onClick={this.event1}>点击弹框</button>&nbsp;
+            <button onClick={this.change}>点击切换天气</button>&nbsp;
+            <input ref={(currentNode) => {this.input2 = currentNode}} onBlur={this.event2} type="text" placeholder='失焦弹框'/>  
+          </div>
+        )
+      }
+    }
+    ReactDOM.render(<Demo/>, document.querySelector('#test'))
+	</script>
+</body>
+</html>
