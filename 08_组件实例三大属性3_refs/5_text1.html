@@ -27,14 +27,17 @@
         isHot: true
       }
       change = () => {
-        
         this.setState({isHot: !this.state.isHot})
+      }
+      saveInput = (c) => {
+        this.input1 = c
       }
       render() {
         return (
           <div>
             <p>今天天气{this.state.isHot ? '炎热' : '凉爽'}</p>
             {/*<input ref={currentNode => {this.input1 = currentNode; console.log(currentNode);}} type="text" placeholder='点击弹框'/>&nbsp;*/}
+            <input ref={this.saveInput} type="text" placeholder='点击弹框'/>&nbsp;
             <button onClick={this.event1}>点击弹框</button>&nbsp;
             <button onClick={this.change}>点击切换天气</button>&nbsp;
             <input ref={(currentNode) => {this.input2 = currentNode}} onBlur={this.event2} type="text" placeholder='失焦弹框'/>  

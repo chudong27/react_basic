@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>1_非受控组件</title>
+</head>
+<body>
+	<!-- 准备好一个“容器” -->
+	<div id="test"></div>
+	
+	<!-- 引入react核心库 -->
+	<script type="text/javascript" src="../js/react.development.js"></script>
+	<!-- 引入react-dom，用于支持react操作DOM -->
+	<script type="text/javascript" src="../js/react-dom.development.js"></script>
+	<!-- 引入babel，用于将jsx转为js -->
+	<script type="text/javascript" src="../js/babel.min.js"></script>
+
+	<script type="text/babel">
+		//创建组件
+    class Demo extends React.Component {
+      state = {
+        username: '',
+        password: ''
+      }
+      login = (event) => {
+        console.log(event);
+        event.preventDefault();
+        alert(this.username)
+      }
+      username = (event) => {
+        this.setState({username: event.target.value})
+      }
+      password = (event) => {
+        this.setState({password: event.target.value})
+      }
+      render() {
+        return (
+          <form action="" onSubmit={this.login}>
+            用户名：<input onChange={this.username} type="text" name='username'/>  
+            密码：<input onChange={this.password} type="password" name='password'/>  
+            <button>登录</button>
+          </form>
+        )
+      }
+    }
+    ReactDOM.render(<Demo/>, document.querySelector('#test'))
+	</script>
+</body>
+</html>

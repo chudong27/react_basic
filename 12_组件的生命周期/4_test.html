@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .list {
+      width: 200px;
+      height: 150px;
+      background-color: skyblue;
+      overflow: auto;
+    }
+
+    .news {
+      height: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="test"></div>
+
+  <script type="text/javascript" src="../js/17.0.1/react.development.js"></script>
+  <!-- 引入react-dom，用于支持react操作DOM -->
+  <script type="text/javascript" src="../js/17.0.1/react-dom.development.js"></script>
+  <!-- 引入babel，用于将jsx转为js -->
+  <script type="text/javascript" src="../js/17.0.1/babel.min.js"></script>
+
+  <script type="text/babel">
+    // 通过可滚动容器的DOM访问scrollTop可以获取当前滚动条距离容器top的距离，也可以设置滚动条位置
+    // 通过可滚动容器的DOM访问scrollHeight 可以获取容器高度（包括未展示的）
+    class NewsList extends React.Component {
+      state = {arrNews: []}
+      componentDidMount() {
+        setInterval(() => {
+          const {arrNews} = this.state 
+          const news = '新闻' + (arrNews.length+1)
+          this.setState({arrNews: [news, ...arrNews]})
+        }, 1000)
+      }
+
+      getSnapshotBeforeUpdate() {
+        return this.refs.list.scrollHeight
+        
+      }
+
+      componentDidUpdate(preProps, preState, height) {
+        this.refs.list.scrollTop += this.refs.list.scrollHeight - height
+      }
+      render() {
+        return (
+          <div className="list" ref='list'>
+            {this.state.arrNews.map((n ,index) => {
+              return <div key={index} className="news">{n}</div>
+            })}
+          </div>
+        )
+      }
+    }
+
+    ReactDOM.render(<NewsList/>, document.querySelector('.test'))
+  </script>
+</body>
+
+</html>
